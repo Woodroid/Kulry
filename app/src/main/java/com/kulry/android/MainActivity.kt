@@ -1,7 +1,8 @@
-package com.example.kurly
+package com.kulry.android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.kurly.android.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
