@@ -1,4 +1,4 @@
-package com.kulry.data
+package com.kurly.data
 
 import org.junit.Test
 

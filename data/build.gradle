@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.kulry.data'
+    namespace 'com.kurly.data'
     compileSdk 32
 
     defaultConfig {
@@ -33,10 +33,21 @@ android {
 }
 
 dependencies {
+    def retrofit2_version = "2.9.0"
+    def okhttp3_version = "4.10.0"
+
+    implementation project(":mockserver")
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
+
+    // retrofit2 & Okhttp3 & gson
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp3_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
+    implementation "com.google.code.gson:gson:2.10.1"
 
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
