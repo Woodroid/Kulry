@@ -2,6 +2,8 @@ package com.kurly.android.mockserver
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.kurly.android.mockserver.core.FileProvider
+import com.kurly.android.mockserver.di.AssetFileProviderForReal
+import com.kurly.android.mockserver.di.AssetFileProviderForTest
 import dagger.hilt.android.testing.CustomTestApplication
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -20,9 +22,11 @@ internal class MockServerTest {
     var hiltRule = HiltAndroidRule(this)
 
     @Inject
+    @AssetFileProviderForReal
     lateinit var fileProvider: FileProvider
 
     @Inject
+    @AssetFileProviderForTest
     lateinit var testFileProvider: FileProvider
 
     @Before
@@ -32,11 +36,11 @@ internal class MockServerTest {
 
     @Test
     fun readResourceFileTest() {
-        println(fileProvider.getJsonFromAsset("section/products/section_products_1.json"))
+        println(testFileProvider.getJsonFromAsset("resources/file_read_test.json"))
     }
 
     @Test
-    fun readResourceFileTest2() {
-        print(testFileProvider.getJsonFromAsset("section/products/section_products_1.json"))
+    fun readResourceFileReal() {
+        print(fileProvider.getJsonFromAsset("section/products/section_products_1.json"))
     }
 }
