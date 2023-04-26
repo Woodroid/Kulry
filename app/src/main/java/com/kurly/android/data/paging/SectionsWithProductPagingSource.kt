@@ -3,6 +3,7 @@ package com.kurly.android.data.paging
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.kurly.android.data.model.Product
 import com.kurly.android.data.model.SectionWithProduct
 import com.kurly.android.domain.repository.SectionRepository
 import javax.inject.Inject
@@ -22,22 +23,28 @@ class SectionsWithProductPagingSource @Inject constructor(
         return try {
             // Start refresh at page 1 if undefined.
             val nextPageNumber = params.key ?: 1
-            val sections = repository.getSections(nextPageNumber).getOrThrow()
+            val sectionsResult = repository.getSections(nextPageNumber)
+            val sections = sectionsResult.getOrThrow().data
 
-            val sectionWithProducts = sections.data.map {
-                val products = repository.getSectionProducts(it.id).getOrThrow().products
-
-                SectionWithProduct(
-                    id = it.id,
-                    title = it.title,
-                    type = it.type,
-                    url = it.url,
-                    products = products
-                )
+            // Fetch all products for all sections in one call.
+            val productDataMap = mutableMapOf<String, List<Product>>()
+            sections.forEach { section ->
+                val productsResult = repository.getSectionProducts(section.id)
+                val products = productsResult.getOrThrow().products
+                productDataMap[section.id] = products
             }
 
-            val prevKey = null
-            val nextKey = sections.paging.nextPage
+            val sectionWithProducts = sections.map { section ->
+                SectionWithProduct(
+                    id = section.id,
+                    title = section.title,
+                    type = section.type,
+                    url = section.url,
+                    products = productDataMap[section.id] ?: emptyList()
+                )
+            }
+            val prevKey = if (nextPageNumber > 1) nextPageNumber - 1 else null
+            val nextKey = sectionsResult.getOrThrow().paging.nextPage
 
             LoadResult.Page(
                 data = sectionWithProducts,
