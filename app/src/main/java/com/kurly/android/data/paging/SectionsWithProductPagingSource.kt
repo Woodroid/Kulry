@@ -1,11 +1,11 @@
 package com.kurly.android.data.paging
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.kurly.android.data.model.SectionWithProduct
 import com.kurly.android.domain.repository.SectionRepository
 import javax.inject.Inject
-import kotlin.Result
 
 class SectionsWithProductPagingSource @Inject constructor(
     private val repository: SectionRepository
@@ -20,6 +20,7 @@ class SectionsWithProductPagingSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SectionWithProduct> {
         return try {
+            Log.d("woo", "load")
             // Start refresh at page 1 if undefined.
             val nextPageNumber = params.key ?: 1
             val sections = repository.getSections(nextPageNumber).getOrThrow()

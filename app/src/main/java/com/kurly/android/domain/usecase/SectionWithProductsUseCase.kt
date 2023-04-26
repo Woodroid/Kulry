@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface SectionWithProductsUseCase {
 
-    suspend operator fun invoke(): Result<Flow<PagingData<SectionWithProduct>>>
+    suspend operator fun invoke(): Flow<PagingData<SectionWithProduct>>
 
 }

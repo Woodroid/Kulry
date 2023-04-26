@@ -1,4 +1,4 @@
-package com.kurly.android.presentation.adapter
+package com.kurly.android.presentation.adapter.diffutil
 
 import androidx.recyclerview.widget.DiffUtil
 import com.kurly.android.data.model.SectionWithProduct

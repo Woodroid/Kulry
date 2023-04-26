@@ -1,5 +1,6 @@
 package com.kurly.android.data.remote.repository
 
+import android.util.Log
 import com.kurly.android.data.remote.ApiServer
 import com.kurly.android.data.remote.response.ProductResponse
 import com.kurly.android.data.remote.response.SectionResponse
@@ -17,6 +18,7 @@ class SectionRepositoryImpl @Inject constructor(private val apiServer: ApiServer
             try {
                 val response = apiServer.getSections(page = page)
                 if (response.isSuccessful) {
+                    Log.d("woo", "getSections Success ${page}")
                     Result.success(response.body()!!)
                 } else {
                     Result.failure(HttpException(response))
@@ -32,6 +34,7 @@ class SectionRepositoryImpl @Inject constructor(private val apiServer: ApiServer
             try {
                 val response = apiServer.getProducts(sectionId = id)
                 if (response.isSuccessful) {
+                    Log.d("woo", "getProducts Success ${id}")
                     Result.success(response.body()!!)
                 } else {
                     Result.failure(HttpException(response))

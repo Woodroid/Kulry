@@ -3,77 +3,25 @@ package com.kurly.android.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.kurly.android.R
 import com.kurly.android.data.model.SectionWithProduct
-import com.kurly.android.databinding.GridListItemBinding
-import com.kurly.android.databinding.HorizontalListItemBinding
-import com.kurly.android.databinding.VerticalListItemBinding
-import com.kurly.android.presentation.adapter.viewholder.GridItemViewHolder
-import com.kurly.android.presentation.adapter.viewholder.HorizontalItemViewHolder
-import com.kurly.android.presentation.adapter.viewholder.VerticalItemViewHolder
+import com.kurly.android.databinding.SectionWithProductListItemBinding
+import com.kurly.android.presentation.adapter.diffutil.SectionWithProductDiffCallback
+import com.kurly.android.presentation.adapter.viewholder.SectionWithProductViewHolder
+import com.kurly.android.presentation.prefs.ProductSharedPreference
+import javax.inject.Inject
 
-class SectionWithProductAdapter :
-    PagingDataAdapter<SectionWithProduct, ViewHolder>(SectionWithProductDiffCallback()) {
+/** 단일 뷰홀더 구현 */
+class SectionWithProductAdapter @Inject constructor(private val productSharedPreference: ProductSharedPreference) :
+    PagingDataAdapter<SectionWithProduct, SectionWithProductViewHolder>(SectionWithProductDiffCallback()) {
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        when (holder) {
-            is VerticalItemViewHolder -> {
-                holder.bind()
-            }
-            is HorizontalItemViewHolder -> {
-                holder.bind()
-            }
-            is GridItemViewHolder -> {
-                holder.bind()
-            }
+    override fun onBindViewHolder(holder: SectionWithProductViewHolder, position: Int) {
+        getItem(position)?.let {
+            holder.bind(it)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return when (viewType) {
-            R.layout.vertical_list_item -> {
-                VerticalItemViewHolder(
-                    VerticalListItemBinding.inflate(
-                        LayoutInflater.from(parent.context),
-                        parent,
-                        false
-                    )
-                )
-            }
-            R.layout.horizontal_list_item -> {
-                HorizontalItemViewHolder(
-                    HorizontalListItemBinding.inflate(
-                        LayoutInflater.from(
-                            parent.context
-                        ), parent, false
-                    )
-                )
-            }
-            else -> {
-                GridItemViewHolder(
-                    GridListItemBinding.inflate(
-                        LayoutInflater.from(parent.context),
-                        parent,
-                        false
-                    )
-                )
-            }
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionWithProductViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return SectionWithProductViewHolder(SectionWithProductListItemBinding.inflate(layoutInflater, parent, false), productSharedPreference)
     }
-
-    override fun getItemViewType(position: Int): Int {
-        var itemViewType = R.layout.grid_list_item
-        val item = getItem(position)
-        when (item?.type) {
-            "VERTICAL" -> {
-                itemViewType = R.layout.vertical_list_item
-            }
-            "HORIZONTAL" -> {
-                itemViewType = R.layout.horizontal_list_item
-            }
-        }
-        return itemViewType
-    }
-
 }

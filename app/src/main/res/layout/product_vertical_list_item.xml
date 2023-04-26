@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="imageUrl"
+            type="String" />
+
+        <variable
+            name="name"
+            type="String" />
+
+        <variable
+            name="discountAmount"
+            type="String" />
+
+        <variable
+            name="discountedPrice"
+            type="String" />
+
+        <variable
+            name="originalPrice"
+            type="String" />
+
+        <variable
+            name="like"
+            type="Boolean" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="6dp">
+
+        <ImageView
+            android:id="@+id/thumbnail_image_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:imageUrl="@{imageUrl}"
+            app:layout_constraintDimensionRatio="6:4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/like_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:src="@{like ? @drawable/ic_btn_heart_on : @drawable/ic_btn_heart_off, default=@drawable/ic_btn_heart_off}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{name}"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/thumbnail_image_view"
+            tools:text="상품 이름" />
+
+        <TextView
+            android:id="@+id/discount_amount_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{discountAmount}"
+            android:textColor="#fa622f"
+            app:layout_constraintStart_toStartOf="@id/name_text_view"
+            app:layout_constraintTop_toBottomOf="@id/name_text_view"
+            tools:text="30%" />
+
+        <TextView
+            android:id="@+id/sale_price_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@{discountedPrice}"
+            app:layout_constraintStart_toEndOf="@id/discount_amount_text_view"
+            app:layout_constraintTop_toTopOf="@id/discount_amount_text_view"
+            app:layout_goneMarginStart="0dp"
+            tools:text="0,000원" />
+
+        <TextView
+            android:id="@+id/standard_price_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@{originalPrice}"
+            android:textColor="#BEBEBE"
+            app:layout_constraintStart_toEndOf="@id/sale_price_text_view"
+            app:layout_constraintTop_toTopOf="@id/sale_price_text_view"
+            tools:text="0,000원" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#BEBEBE"
+            app:layout_constraintBottom_toBottomOf="@id/standard_price_text_view"
+            app:layout_constraintEnd_toEndOf="@id/standard_price_text_view"
+            app:layout_constraintStart_toStartOf="@id/standard_price_text_view"
+            app:layout_constraintTop_toTopOf="@id/standard_price_text_view" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

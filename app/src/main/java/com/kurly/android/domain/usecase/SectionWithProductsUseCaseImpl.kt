@@ -4,22 +4,14 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.kurly.android.data.model.SectionWithProduct
 import com.kurly.android.domain.repository.PagingRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class SectionWithProductsUseCaseImpl @Inject constructor(private val pagingRepository: PagingRepository):
+class SectionWithProductsUseCaseImpl @Inject constructor(private val pagingRepository: PagingRepository) :
     SectionWithProductsUseCase {
 
-    companion object {
-        private const val NETWORK_PAGE_SIZE = 20
-    }
-
-    override suspend fun invoke(): Result<Flow<PagingData<SectionWithProduct>>> {
-        val sectionWithProductFlow = pagingRepository.getSectionWithProductFlow()
-        sectionWithProductFlow.single()
-        return sectionWithProductFlow.let {
-            Result.success(it)
-        }
-    }
+    override suspend fun invoke(): Flow<PagingData<SectionWithProduct>> = pagingRepository.getSectionWithProductFlow()
 }
