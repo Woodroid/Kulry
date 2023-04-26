@@ -18,7 +18,6 @@ class SectionRepositoryImpl @Inject constructor(private val apiServer: ApiServer
             try {
                 val response = apiServer.getSections(page = page)
                 if (response.isSuccessful) {
-                    Log.d("woo", "getSections Success ${page}")
                     Result.success(response.body()!!)
                 } else {
                     Result.failure(HttpException(response))
@@ -34,7 +33,6 @@ class SectionRepositoryImpl @Inject constructor(private val apiServer: ApiServer
             try {
                 val response = apiServer.getProducts(sectionId = id)
                 if (response.isSuccessful) {
-                    Log.d("woo", "getProducts Success ${id}")
                     Result.success(response.body()!!)
                 } else {
                     Result.failure(HttpException(response))

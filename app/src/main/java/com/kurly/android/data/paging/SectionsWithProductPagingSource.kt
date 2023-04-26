@@ -20,7 +20,6 @@ class SectionsWithProductPagingSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SectionWithProduct> {
         return try {
-            Log.d("woo", "load")
             // Start refresh at page 1 if undefined.
             val nextPageNumber = params.key ?: 1
             val sections = repository.getSections(nextPageNumber).getOrThrow()

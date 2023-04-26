@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             viewModel.getSectionWithProducts().collect {
-                Log.d("woo", "submitData")
                 adapter.submitData(it)
             }
         }
