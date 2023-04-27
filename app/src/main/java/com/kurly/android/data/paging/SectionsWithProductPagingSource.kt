@@ -26,15 +26,11 @@ class SectionsWithProductPagingSource @Inject constructor(
             val sectionsResult = repository.getSections(nextPageNumber)
             val sections = sectionsResult.getOrThrow().data
 
-            Log.d("woo", "nextPageNumber ${nextPageNumber}")
             // Fetch all products for all sections in one call.
             val productDataMap = mutableMapOf<String, List<Product>>()
             sections.forEach { section ->
                 val productsResult = repository.getSectionProducts(section.id)
                 val products = productsResult.getOrThrow().products
-                for(product in products) {
-                    Log.d("woo", "productName ${product.name}")
-                }
                 productDataMap[section.id] = products
             }
 
@@ -56,7 +52,6 @@ class SectionsWithProductPagingSource @Inject constructor(
                 nextKey = nextKey
             )
         } catch (e: Exception) {
-            e.printStackTrace()
             // Handle errors in this block and return LoadResult.Error if it is an
             // expected error (such as a network failure).
             LoadResult.Error(e)
