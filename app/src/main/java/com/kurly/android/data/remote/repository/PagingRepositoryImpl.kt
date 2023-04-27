@@ -17,7 +17,8 @@ class PagingRepositoryImpl @Inject constructor(private val repository: SectionRe
         return Pager(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,
-                enablePlaceholders = false
+                enablePlaceholders = false,
+                prefetchDistance = 5
             ),
             pagingSourceFactory = { SectionsWithProductPagingSource(repository) }
         ).flow
