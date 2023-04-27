@@ -1,5 +1,6 @@
 package com.kurly.android.presentation.adapter.viewholder
 
+import android.util.Log
 import com.kurly.android.data.model.Product
 import com.kurly.android.databinding.ProductGridListItemBinding
 import com.kurly.android.presentation.prefs.ProductSharedPreference

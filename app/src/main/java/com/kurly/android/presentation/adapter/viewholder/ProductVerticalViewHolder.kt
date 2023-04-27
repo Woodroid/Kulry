@@ -1,5 +1,6 @@
 package com.kurly.android.presentation.adapter.viewholder
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.kurly.android.data.model.Product
 import com.kurly.android.databinding.ProductVerticalListItemBinding
